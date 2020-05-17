@@ -1,0 +1,5 @@
+# ignore auto generated files.
+
+bin/
+obj/
+.vscode/
