@@ -1,4 +1,4 @@
-namespace RegistrationServiceApi
+namespace RegistrationService
 {
     public class RegistrationResult
     {

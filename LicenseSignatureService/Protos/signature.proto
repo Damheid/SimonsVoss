@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+option csharp_namespace = "LicenseSignatureService";
+
+service LicenseSignature {
+    rpc Generate (SignatureRequest) returns (SignatureResponse) {}
+}
+
+message SignatureRequest {
+    string licenseKey = 1;
+}
+
+message SignatureResponse {
+    string signature = 1;
+}
