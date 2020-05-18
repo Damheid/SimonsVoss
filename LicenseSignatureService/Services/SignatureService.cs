@@ -1,3 +1,5 @@
+using System;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace LicenseSignatureService
@@ -6,7 +8,15 @@ namespace LicenseSignatureService
     {
         public override Task<SignatureResponse> Generate(SignatureRequest request, Grpc.Core.ServerCallContext context)
         {
-            return Task.FromResult(new SignatureResponse { Signature = "ABCD" });
+            var byteString = Sign(request.LicenseKey);
+            return Task.FromResult(new SignatureResponse { Signature = Convert.ToBase64String(byteString) });
+        }
+
+        public byte[] Sign(string licenseKey)
+        {
+            return Encoding.UTF8.GetBytes(licenseKey);
+
+            // Perform Sign algorithm here
         }
     }
 }
