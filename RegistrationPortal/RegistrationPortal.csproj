@@ -9,7 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\RegistrationService\RegistrationService.csproj" />
+    <ProjectReference Include="..\RegistrationLibrary\RegistrationLibrary.csproj" />
   </ItemGroup>
 
 </Project>

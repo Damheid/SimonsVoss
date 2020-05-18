@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
   <ItemGroup>
-    <ProjectReference Include="..\RegistrationService\RegistrationService.csproj" />
+    <ProjectReference Include="..\RegistrationLibrary\RegistrationLibrary.csproj" />
     <ProjectReference Include="..\LicenseSignatureService\LicenseSignatureService.csproj" />
   </ItemGroup>
 
