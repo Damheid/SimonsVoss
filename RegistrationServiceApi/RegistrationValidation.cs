@@ -1,5 +1,5 @@
+using RegistrationLibrary;
 using RegistrationLibrary.Interfaces;
-using RegistrationService;
 
 namespace RegistrationServiceApi
 {

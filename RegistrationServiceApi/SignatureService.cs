@@ -2,8 +2,8 @@ using System;
 using System.Threading.Tasks;
 using Grpc.Net.Client;
 using LicenseSignatureService;
+using RegistrationLibrary;
 using RegistrationLibrary.Interfaces;
-using RegistrationService;
 
 namespace RegistrationServiceApi
 {

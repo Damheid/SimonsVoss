@@ -1,4 +1,4 @@
-namespace RegistrationService
+namespace RegistrationLibrary
 {
     public class RegistrationRequest
     {

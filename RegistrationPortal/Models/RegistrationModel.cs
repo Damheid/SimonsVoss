@@ -1,7 +1,7 @@
 
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using RegistrationService;
+using RegistrationLibrary;
 
 namespace RegistrationPortal.Models
 {

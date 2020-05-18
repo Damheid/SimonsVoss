@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using RegistrationLibrary;
 using RegistrationLibrary.Interfaces;
-using RegistrationService;
 
 namespace RegistrationServiceApi.Controllers
 {
