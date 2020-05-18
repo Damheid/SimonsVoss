@@ -3,6 +3,7 @@ using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Grpc.Net.Client;
 using LicenseSignatureService;
+using Microsoft.Extensions.Configuration;
 using RegistrationLibrary;
 using RegistrationLibrary.Interfaces;
 
@@ -10,6 +11,12 @@ namespace RegistrationServiceApi
 {
     public class SignatureService : ISignatureService
     {
+        private readonly IConfiguration configuration;
+        public SignatureService(IConfiguration configuration)
+        {
+            this.configuration = configuration;
+
+        }
         public async Task<string> Sign(RegistrationRequest request)
         {
             if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
@@ -20,7 +27,10 @@ namespace RegistrationServiceApi
                     "System.Net.Http.SocketsHttpHandler.Http2UnencryptedSupport", true);
             }
 
-            using var channel = GrpcChannel.ForAddress("http://localhost:5002");
+            var address = configuration.GetValue<string>("SignatureServiceAddress");
+
+            using var channel = GrpcChannel.ForAddress(address);
+
             var client = new LicenseSignature.LicenseSignatureClient(channel);
             var reply = await client.GenerateAsync(new SignatureRequest { LicenseKey = request.LicenseKey });
 
