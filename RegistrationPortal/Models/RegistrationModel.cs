@@ -1,6 +1,7 @@
 
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using RegistrationService;
 
 namespace RegistrationPortal.Models
 {
@@ -26,5 +27,17 @@ namespace RegistrationPortal.Models
         [DisplayName("License Key")]
         [Required(ErrorMessage = "License Key is required")]
         public string LicenseKey { get; set; }
+
+        public RegistrationRequest ToRequest()
+        {
+            return new RegistrationRequest
+            {
+                CompanyName = this.CompanyName,
+                ContactPerson = this.ContactPerson,
+                Address = this.Address,
+                Email = this.Email,
+                LicenseKey = this.LicenseKey
+            };
+        }
     }
 }

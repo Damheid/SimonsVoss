@@ -1,11 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
+﻿using System.Diagnostics;
+using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using RegistrationPortal.Models;
+using RegistrationService;
 
 namespace RegistrationPortal.Controllers
 {
@@ -24,12 +25,32 @@ namespace RegistrationPortal.Controllers
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public IActionResult Index(RegistrationModel model)
+        public async Task<IActionResult> Index(RegistrationModel model)
         {
             if (ModelState.IsValid)
-                return Content($"Hello {model.ContactPerson}");
+            {
+                var result = await PerformRequest(model.ToRequest());
+
+                if (result.Success)
+                    return Content($"Signature: {result.Signature}");
+
+                return Content($"It was not possible to get the signature");
+            }
 
             return View(model);
+        }
+
+        private async Task<RegistrationResult> PerformRequest(RegistrationRequest request)
+        {
+            using (var httpClient = new HttpClient())
+            {
+                var stringContent = new StringContent(JsonConvert.SerializeObject(request), Encoding.UTF8, "application/json");
+                using (var response = await httpClient.PostAsync("https://localhost:5001/Registration", stringContent))
+                {
+                    string apiResponse = await response.Content.ReadAsStringAsync();
+                    return JsonConvert.DeserializeObject<RegistrationResult>(apiResponse);
+                }
+            }
         }
 
         public IActionResult Privacy()
