@@ -1,11 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
+using System.Runtime.InteropServices;
 
 namespace LicenseSignatureService
 {
@@ -22,11 +18,14 @@ namespace LicenseSignatureService
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    // Using MacOs, see link above
-                    webBuilder.ConfigureKestrel(options =>
+                    if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
                     {
-                        options.ListenLocalhost(5002, o => o.Protocols = HttpProtocols.Http2);
-                    });
+                        // Using macOS, see link above
+                        webBuilder.ConfigureKestrel(options =>
+                        {
+                            options.ListenLocalhost(5002, o => o.Protocols = HttpProtocols.Http2);
+                        });
+                    }
                     webBuilder.UseStartup<Startup>();
                 });
     }
