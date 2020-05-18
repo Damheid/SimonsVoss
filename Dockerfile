@@ -26,5 +26,6 @@ RUN dotnet publish "RegistrationServiceApi.csproj" -c Release -o /app/publish
 
 FROM base AS final
 WORKDIR /app
+ARG SIGNATURE_SERVICE=http://licensesignatureservice
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "RegistrationServiceApi.dll"]
+ENTRYPOINT ["dotnet", "RegistrationServiceApi.dll", "SignatureServiceAddress=${SIGNATURE_SERVICE}}"]

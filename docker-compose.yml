@@ -3,9 +3,21 @@ version: '3.4'
 
 services:
   registrationserviceapi:
+    container_name: registrationserviceapi
     image: registrationserviceapi
     build:
       context: .
       dockerfile: Dockerfile
+      args:
+        SIGNATURE_SERVICE: http://licensesignatureservice
     ports:
-      - 5001
+      - 5001:5001
+
+  licensesignatureservice:
+    container_name: licensesignatureservice
+    image: licensesignatureservice
+    build:
+      context: ./LicenseSignatureService
+      dockerfile: Dockerfile
+    ports:
+      - 5002:5002
