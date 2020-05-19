@@ -1,0 +1,13 @@
+@{
+    ViewData["Title"] = "Registration Result";
+}
+
+@model ResultModel
+
+<h1>Registration:</h1>
+
+<p>@Model.Message</p>
+@if(Model.Success)
+{
+    <p>@Model.Signature</p>
+}

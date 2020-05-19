@@ -31,10 +31,11 @@ namespace RegistrationPortal.Controllers
             {
                 var result = await PerformRequest(model.ToRequest());
 
-                if (result.Success)
-                    return Content($"Signature: {result.Signature}");
+                var resultModel = ResultModel.FromResult(result);
 
-                return Content($"It was not possible to get the signature");
+                TempData["resultModel"] = Newtonsoft.Json.JsonConvert.SerializeObject(resultModel);
+
+                return RedirectToAction("Result");
             }
 
             return View(model);
@@ -51,6 +52,20 @@ namespace RegistrationPortal.Controllers
                     return JsonConvert.DeserializeObject<RegistrationResult>(apiResponse);
                 }
             }
+        }
+
+        public IActionResult Result()
+        {
+            ResultModel resultModel = null;
+            if(TempData["resultModel"] is string s)
+            {
+                resultModel = JsonConvert.DeserializeObject<ResultModel>(s);
+            }
+
+            if (resultModel == null)
+                return RedirectToAction("Index");
+                
+            return View(resultModel);
         }
 
         public IActionResult Privacy()
