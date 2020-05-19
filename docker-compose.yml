@@ -7,9 +7,10 @@ services:
     image: registrationserviceapi
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.local
       args:
         SIGNATURE_SERVICE: http://licensesignatureservice
+        PORT: 5001
     ports:
       - 5001:5001
 
@@ -18,6 +19,8 @@ services:
     image: licensesignatureservice
     build:
       context: ./LicenseSignatureService
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.local
+      args:
+        PORT: 5002
     ports:
       - 5002:5002
