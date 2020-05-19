@@ -1,7 +1,6 @@
 FROM mcr.microsoft.com/dotnet/core/aspnet:3.1 AS base
 WORKDIR /app
-EXPOSE 5001
-ENV ASPNETCORE_URLS=http://*:5001
+ENV ASPNETCORE_URLS=http://*:$PORT
 
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS build
 WORKDIR /src
@@ -26,6 +25,5 @@ RUN dotnet publish "RegistrationServiceApi.csproj" -c Release -o /app/publish
 
 FROM base AS final
 WORKDIR /app
-ARG SIGNATURE_SERVICE=http://licensesignatureservice
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "RegistrationServiceApi.dll", "SignatureServiceAddress=${SIGNATURE_SERVICE}}"]
+ENTRYPOINT ["dotnet", "RegistrationServiceApi.dll", "SignatureServiceAddress=https://simonsvoss-signature-service.herokuapp.com"]
