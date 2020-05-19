@@ -9,29 +9,22 @@ namespace RegistrationServiceApi.Controllers
     [Route("[controller]")]
     public class RegistrationController : ControllerBase
     {
-        private readonly IRegistrationValidation validation;
-        private readonly ISignatureService signatureService;
-
-        public RegistrationController(IRegistrationValidation validation,
-                                      ISignatureService signatureService)
+        private readonly IRegistrator registrator;
+        public RegistrationController(IRegistrator registrator)
         {
-            this.validation = validation;
-            this.signatureService = signatureService;
+            this.registrator = registrator;
+        }
+
+        [HttpGet]
+        public string Get()
+        {
+            return "Registration Service";
         }
 
         [HttpPost]
         public async Task<RegistrationResult> Post([FromBody] RegistrationRequest request)
         {
-            var result = new RegistrationResult { Success = false };
-            
-            if (validation.IsValid(request))
-            {
-                result.Signature = await signatureService.Sign(request);
-                result.Success = true;
-            }
-
-            return result;
+            return await registrator.Register(request);
         }
-
     }
 }

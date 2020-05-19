@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using RegistrationLibrary;
 using RegistrationLibrary.Interfaces;
 
 namespace RegistrationServiceApi
@@ -20,6 +21,7 @@ namespace RegistrationServiceApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddRegistrationLibraryDefaults();
             services.AddSingleton<ISignatureService, SignatureService>();
             services.AddSingleton<IRegistrationValidation, RegistrationValidation>();
         }
